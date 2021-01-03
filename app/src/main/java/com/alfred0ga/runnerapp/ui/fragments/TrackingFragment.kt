@@ -22,10 +22,11 @@ import com.alfred0ga.runnerapp.ui.viewModels.MainViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.android.synthetic.main.fragment_setup.*
 import kotlinx.android.synthetic.main.fragment_tracking.*
 import java.util.*
@@ -82,6 +83,12 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
         mapView.getMapAsync {
             map = it
+
+            var style = MapStyleOptions.loadRawResourceStyle(
+                context,
+                R.raw.style_json
+            )
+            map?.setMapStyle(style)
             addAllPolylines()
         }
         subscribeToObservers()
